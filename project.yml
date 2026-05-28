@@ -1,0 +1,55 @@
+name: Nowt
+options:
+  bundleIdPrefix: com.nowt
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+  xcodeVersion: "16"
+  swift: "6.0"
+
+targets:
+  Nowt:
+    type: application
+    platform: [iOS, macOS]
+    sources:
+      - path: Nowt
+    resources:
+      - path: Nowt/Resources/Assets.xcassets
+      - path: Nowt/Resources/Fonts
+      - path: Nowt/Resources/WebApp
+        buildPhase: resources
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nowt.app
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_FILE: Nowt/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "6.0"
+        ENABLE_HARDENED_RUNTIME: YES
+      configs:
+        debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+        release:
+          SWIFT_OPTIMIZATION_LEVEL: "-O"
+    info:
+      path: Nowt/Info.plist
+      properties:
+        CFBundleName: Nowt
+        CFBundleDisplayName: Nowt
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        NSHumanReadableCopyright: ""
+        UILaunchScreen:
+          UIColorName: Paper
+        NSSupportsAutomaticTermination: true
+        NSSupportsSuddenTermination: true
+        UIAppFonts:
+          - DMSans-Regular.ttf
+          - DMSans-Medium.ttf
+          - DMSans-Bold.ttf
+          - SpaceGrotesk-Medium.ttf
+          - SpaceGrotesk-SemiBold.ttf
+          - SpaceGrotesk-Bold.ttf
+        ATSApplicationFontsPath: Fonts
