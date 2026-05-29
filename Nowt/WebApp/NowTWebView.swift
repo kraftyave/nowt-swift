@@ -6,10 +6,42 @@ import UniformTypeIdentifiers
 
 struct NowTWebView: View {
     var body: some View {
-        WebViewRepresentable()
-            .ignoresSafeArea()
+        ZStack(alignment: .top) {
+            WebViewRepresentable()
+                .ignoresSafeArea()
+
+            #if os(macOS)
+            WindowDragHandle()
+                .frame(height: 30)
+            #endif
+        }
     }
 }
+
+#if os(macOS)
+/// Invisible drag area at the top of the window so users can move the
+/// app even with `.hiddenTitleBar` — the WKWebView consumes all mouse
+/// events, so we need a native view overlay that forwards drags to the window.
+struct WindowDragHandle: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView {
+        let view = DraggableRegion()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = .clear
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {}
+}
+
+private class DraggableRegion: NSView {
+    override func mouseDown(with event: NSEvent) {
+        window?.performDrag(with: event)
+    }
+    override func mouseDragged(with event: NSEvent) {
+        window?.performDrag(with: event)
+    }
+}
+#endif
 
 // MARK: - Platform representable
 
